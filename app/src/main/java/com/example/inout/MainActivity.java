@@ -4,6 +4,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 
 import com.google.android.material.appbar.MaterialToolbar;
 
@@ -21,15 +23,24 @@ public class MainActivity extends AppCompatActivity {
         toolBar.setBackgroundColor(0xFF018786);
         setSupportActionBar(toolBar);
         toolBar.setTitleCentered(true);
+        toolBar.setSubtitleCentered(true);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(getCurrentTitle());
+        actionBar.setTitle(getResources().getString(R.string.app_name));
+        actionBar.setSubtitle(getCurrentTitle());
+        actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setIcon(R.drawable.app_icon);
     }
 
     private String getCurrentTitle() {
-        String suffix =false ? "" : " | Logged in as Gal";
-        return getResources().getString(R.string.app_name) + suffix;
+        // TODO: 21/05/2022 add User resolving
+        return false ? "" : "Logged in as Gal";
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu, menu);
 
+        return super.onCreateOptionsMenu(menu);
+    }
 }
