@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">In&amp;Out</string>
+    <string name="actionBar_menu">Menu</string>
+    <string name="actionBar_home">Home</string>
 </resources>
