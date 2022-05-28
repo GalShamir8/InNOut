@@ -12,15 +12,18 @@ import android.view.MenuItem;
 
 import com.example.inout.R;
 import com.example.inout.fragments.CalendarFragment;
+import com.example.inout.fragments.UpdateHoursFragment;
 import com.google.android.material.appbar.MaterialToolbar;
 
 public class MainActivity extends AppCompatActivity {
+    private Bundle data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setActionBar();
+        data = new Bundle();
     }
 
     private void setActionBar() {
@@ -103,6 +106,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openUpdateHoursForm(int year, int month, int day) {
+        data.putString("date", String.format("%d/%d/%d",day, month, year));
+        UpdateHoursFragment updateHoursFragment = new UpdateHoursFragment();
+        updateHoursFragment.setArguments(data);
+        loadFragment(R.id.main_bottom_frame, updateHoursFragment);
+        updateHoursFragment.setFormDate(year, month, day);
     }
 
     private void loadFragment(int resource, Fragment fragment) {
