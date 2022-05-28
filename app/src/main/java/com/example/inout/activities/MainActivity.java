@@ -3,6 +3,7 @@ package com.example.inout.activities;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
+import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.example.inout.R;
+import com.example.inout.fragments.CalendarFragment;
 import com.google.android.material.appbar.MaterialToolbar;
 
 public class MainActivity extends AppCompatActivity {
@@ -90,7 +92,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void logout() { }
 
-    private void updateHours() { }
+    private void updateHours() {
+        loadFragment(new CalendarFragment());
+    }
+
+    private void loadFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction().
+                replace(R.id.main_center_frame, fragment).commit();
+    }
 
     private void updateProfile() { }
 

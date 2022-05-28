@@ -9,6 +9,7 @@
 
     <include layout="@layout/activity_action_bar" />
     <FrameLayout
+        android:id="@+id/main_center_frame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 </RelativeLayout>
