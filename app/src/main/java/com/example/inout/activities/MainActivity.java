@@ -93,7 +93,16 @@ public class MainActivity extends AppCompatActivity {
     private void logout() { }
 
     private void updateHours() {
-        loadFragment(new CalendarFragment());
+        CalendarFragment calendarFragment = new CalendarFragment();
+        calendarFragment.setOnDatePickCallback((params) -> openUpdateHoursForm(
+                (int)params[0],
+                (int)params[1],
+                (int)params[2]
+        ));
+        loadFragment(calendarFragment);
+    }
+
+    private void openUpdateHoursForm(int year, int month, int day) {
     }
 
     private void loadFragment(Fragment fragment) {
