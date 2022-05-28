@@ -58,11 +58,39 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            // back arrow pressed
             case android.R.id.home:
+                super.onBackPressed();
+                return true;
+
+            // TODO: 28/05/2022 attached to home page
+            // home icon pressed
+            case R.id.home_action:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
+
+            case R.id.updateProfile_action:
+                updateProfile();
+                return true;
+
+            case R.id.updateHours_action:
+                updateHours();
+                return true;
+
+            case R.id.logout_action:
+                logout();
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
+
     }
+
+    private void logout() { }
+
+    private void updateHours() { }
+
+    private void updateProfile() { }
+
 }
