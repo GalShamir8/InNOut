@@ -33,7 +33,7 @@ public class CalendarFragment extends Fragment {
         CalendarView calendar = view.findViewById(R.id.calendarView);
         calendar.setOnDateChangeListener((calendarView, year, month, day) -> {
             if (onDatePickCallback != null){
-                onDatePickCallback.call(year, month, day);
+                onDatePickCallback.call(year, month + 1, day);
             }
         });
         return view;
