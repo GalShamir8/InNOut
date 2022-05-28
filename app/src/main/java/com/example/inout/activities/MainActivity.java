@@ -99,15 +99,15 @@ public class MainActivity extends AppCompatActivity {
                 (int)params[1],
                 (int)params[2]
         ));
-        loadFragment(calendarFragment);
+        loadFragment(R.id.main_center_frame, calendarFragment);
     }
 
     private void openUpdateHoursForm(int year, int month, int day) {
     }
 
-    private void loadFragment(Fragment fragment) {
+    private void loadFragment(int resource, Fragment fragment) {
         getSupportFragmentManager().beginTransaction().
-                replace(R.id.main_center_frame, fragment).commit();
+                replace(resource, fragment).commit();
     }
 
     private void updateProfile() { }
