@@ -22,13 +22,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void setActionBar() {
         MaterialToolbar toolBar = findViewById(R.id.app_actionBar);
-        toolBar.setBackgroundColor(0xFF018786);
+        toolBar.setBackgroundColor(getResources().getColor(R.color.teal_700, this.getTheme()));
         setSupportActionBar(toolBar);
         setActionBarTitle(toolBar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setIcon(R.drawable.app_icon);
         }
     }
 
@@ -52,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu, menu);
-
+        
         return super.onCreateOptionsMenu(menu);
     }
 
