@@ -8,5 +8,7 @@
     tools:context=".activities.MainActivity">
 
     <include layout="@layout/activity_action_bar" />
-
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </RelativeLayout>
