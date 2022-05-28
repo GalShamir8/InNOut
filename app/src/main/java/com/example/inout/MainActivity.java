@@ -2,10 +2,12 @@ package com.example.inout;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
 
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.google.android.material.appbar.MaterialToolbar;
 
@@ -22,13 +24,23 @@ public class MainActivity extends AppCompatActivity {
         MaterialToolbar toolBar = findViewById(R.id.app_actionBar);
         toolBar.setBackgroundColor(0xFF018786);
         setSupportActionBar(toolBar);
-        toolBar.setTitleCentered(true);
-        toolBar.setSubtitleCentered(true);
+        setActionBarTitle(toolBar);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(getResources().getString(R.string.app_name));
-        actionBar.setSubtitle(getCurrentTitle());
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setIcon(R.drawable.app_icon);
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setIcon(R.drawable.app_icon);
+        }
+    }
+
+    private void setActionBarTitle(MaterialToolbar toolBar) {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(getResources().getString(R.string.app_name));
+            actionBar.setSubtitle(getCurrentTitle());
+
+            toolBar.setTitleCentered(true);
+            toolBar.setSubtitleCentered(true);
+        }
     }
 
     private String getCurrentTitle() {
