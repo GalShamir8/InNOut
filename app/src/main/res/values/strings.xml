@@ -2,4 +2,7 @@
     <string name="app_name">In&amp;Out</string>
     <string name="actionBar_menu">Menu</string>
     <string name="actionBar_home">Home</string>
+    <string name="update_profile_action">Update Profile</string>
+    <string name="update_hours_action">Update Hours</string>
+    <string name="logout_action">Logout</string>
 </resources>
