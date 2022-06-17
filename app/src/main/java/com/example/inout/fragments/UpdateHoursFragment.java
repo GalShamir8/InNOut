@@ -7,14 +7,17 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TimePicker;
 
 import com.example.inout.R;
-import com.google.android.material.textview.MaterialTextView;
+import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.Calendar;
 
 
 public class UpdateHoursFragment extends Fragment {
-
+    private TimePicker updateHour_start;
+    private TimePicker updateHour_end;
     public UpdateHoursFragment() { }
 
     @Override
@@ -26,13 +29,19 @@ public class UpdateHoursFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_update_hours, container, false);
-        MaterialTextView txt = view.findViewById(R.id.txt);
+        setViews(view);
         assert getArguments() != null;
-        String date = getArguments().getString("date");
-        txt.setText(date);
         return view;
     }
 
-    public void setFormDate(int year, int month, int day){
+    private void setViews(View view) {
+        updateHour_start = view.findViewById(R.id.updateHour_start);
+        updateHour_end = view.findViewById(R.id.updateHour_end);
+        updateHour_start.setIs24HourView(true);
+        updateHour_end.setIs24HourView(true);
+        updateHour_start.setHour(Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
+        updateHour_end.setHour(Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
+        updateHour_start.setMinute(Calendar.getInstance().get(Calendar.MINUTE));
+        updateHour_end.setMinute(Calendar.getInstance().get(Calendar.MINUTE));
     }
 }

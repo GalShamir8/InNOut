@@ -110,7 +110,6 @@ public class MainActivity extends AppCompatActivity {
         UpdateHoursFragment updateHoursFragment = new UpdateHoursFragment();
         updateHoursFragment.setArguments(data);
         loadFragment(R.id.main_bottom_frame, updateHoursFragment);
-        updateHoursFragment.setFormDate(year, month, day);
     }
 
     private void loadFragment(int resource, Fragment fragment) {
