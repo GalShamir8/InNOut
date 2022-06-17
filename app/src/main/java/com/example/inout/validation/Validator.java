@@ -2,7 +2,10 @@ package com.example.inout.validation;
 
 public abstract class Validator {
     private String errorMessage = "";
-    private Rule validateRule = Rule.NOT_EMPTY;
+
+    public Validator(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
 
     abstract public boolean validate(Object ... params);
 }
