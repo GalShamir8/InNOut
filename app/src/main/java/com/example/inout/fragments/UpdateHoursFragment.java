@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +19,10 @@ import java.util.Calendar;
 
 
 public class UpdateHoursFragment extends Fragment {
-    private enum eStatus {success, error};
+    private enum eStatus {success, error, failed};
     private static final String SUCCESS_MSG = "Valid Hours";
     private static final String ERROR_MSG = "Invalid End Hours";
+    private static final String FAILED_SAVE_MSG = "Failed to save changes";
 
     private MaterialTextView updateHour_LBL_status;
     private TimePicker updateHour_start;
@@ -56,6 +58,8 @@ public class UpdateHoursFragment extends Fragment {
     }
 
     private void setListeners() {
+        updateHour_start.setOnTimeChangedListener((timePicker, hours, minutes) ->
+                handleTimeChange(updateHour_end.getHour(), updateHour_end.getMinute()));
         updateHour_end.setOnTimeChangedListener((timePicker, hours, minutes) ->
                 handleTimeChange(hours, minutes));
     }
@@ -63,9 +67,9 @@ public class UpdateHoursFragment extends Fragment {
     private void handleTimeChange(int hours, int minutes) {
         if (isValidEndTime(hours, minutes)){
             setLabel(eStatus.success);
-            save();
+        }else {
+            setLabel(eStatus.error);
         }
-        setLabel(eStatus.error);
     }
 
     private void setLabel(eStatus lblStatus) {
@@ -80,6 +84,11 @@ public class UpdateHoursFragment extends Fragment {
                 message = ERROR_MSG;
                 color = Color.RED;
                 break;
+            case failed:
+                message = FAILED_SAVE_MSG;
+                color = Color.RED;
+                break;
+
         }
         updateHour_LBL_status.setText(message);
         updateHour_LBL_status.setTextColor(color);
@@ -95,6 +104,11 @@ public class UpdateHoursFragment extends Fragment {
     }
 
     private void save() {
+        if (onSaveCallback != null){
+            onSaveCallback.call();
+        }else{
+            setLabel(eStatus.failed);
+        }
     }
 
     private void setTimeDefaultDisplay() {
