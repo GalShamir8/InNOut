@@ -13,6 +13,7 @@ import android.widget.TimePicker;
 
 import com.example.inout.R;
 import com.example.inout.common.Callable;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.Calendar;
@@ -27,6 +28,7 @@ public class UpdateHoursFragment extends Fragment {
     private MaterialTextView updateHour_LBL_status;
     private TimePicker updateHour_start;
     private TimePicker updateHour_end;
+    private MaterialButton updateHour_BTN_save;
 
     public void setOnSaveCallback(Callable onSaveCallback) {
         this.onSaveCallback = onSaveCallback;
@@ -53,6 +55,7 @@ public class UpdateHoursFragment extends Fragment {
         updateHour_LBL_status = view.findViewById(R.id.updateHour_LBL_status);
         updateHour_start = view.findViewById(R.id.updateHour_start);
         updateHour_end = view.findViewById(R.id.updateHour_end);
+        updateHour_BTN_save = view.findViewById(R.id.updateHour_BTN_save);
         setTimeDefaultDisplay();
         setListeners();
     }
@@ -62,6 +65,7 @@ public class UpdateHoursFragment extends Fragment {
                 handleTimeChange(updateHour_end.getHour(), updateHour_end.getMinute()));
         updateHour_end.setOnTimeChangedListener((timePicker, hours, minutes) ->
                 handleTimeChange(hours, minutes));
+        updateHour_BTN_save.setOnClickListener(e -> save());
     }
 
     private void handleTimeChange(int hours, int minutes) {
