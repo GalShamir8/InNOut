@@ -13,6 +13,7 @@ import android.widget.TimePicker;
 
 import com.example.inout.R;
 import com.example.inout.common.Callable;
+import com.example.inout.common.TimeClock;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 
@@ -62,19 +63,26 @@ public class UpdateHoursFragment extends Fragment {
 
     private void setListeners() {
         updateHour_start.setOnTimeChangedListener((timePicker, hours, minutes) ->
-                handleTimeChange(updateHour_end.getHour(), updateHour_end.getMinute()));
+                handleTimeChange(new TimeClock(
+                        updateHour_end.getHour(),
+                        updateHour_end.getMinute())
+                ));
         updateHour_end.setOnTimeChangedListener((timePicker, hours, minutes) ->
-                handleTimeChange(hours, minutes));
+                handleTimeChange(new TimeClock(hours, minutes)));
         updateHour_BTN_save.setOnClickListener(e -> save());
     }
 
-    private void handleTimeChange(int hours, int minutes) {
-        if (isValidEndTime(hours, minutes)){
+    private void handleTimeChange(TimeClock timeClock) {
+        int condition = timeClock.compareTo(
+                new TimeClock(updateHour_start.getHour(),
+                updateHour_start.getMinute()));
+        if (condition > 0){
             setLabel(eStatus.success);
         }else {
             setLabel(eStatus.error);
         }
     }
+
 
     private void setLabel(eStatus lblStatus) {
         String message = "";
@@ -96,15 +104,6 @@ public class UpdateHoursFragment extends Fragment {
         }
         updateHour_LBL_status.setText(message);
         updateHour_LBL_status.setTextColor(color);
-    }
-
-    private boolean isValidEndTime(int endHour, int endMinute) {
-        int startHour = updateHour_start.getHour();
-        int startMinute = updateHour_start.getMinute();
-        if(startHour == endHour){
-            return startMinute < endMinute;
-        }
-        return startHour < endHour;
     }
 
     private void save() {
