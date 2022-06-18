@@ -37,11 +37,21 @@ public class UpdateHoursFragment extends Fragment {
     private void setViews(View view) {
         updateHour_start = view.findViewById(R.id.updateHour_start);
         updateHour_end = view.findViewById(R.id.updateHour_end);
+        setTimeDefaultDisplay();
+    }
+
+    private void setTimeDefaultDisplay() {
         updateHour_start.setIs24HourView(true);
         updateHour_end.setIs24HourView(true);
-        updateHour_start.setHour(Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
-        updateHour_end.setHour(Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
-        updateHour_start.setMinute(Calendar.getInstance().get(Calendar.MINUTE));
-        updateHour_end.setMinute(Calendar.getInstance().get(Calendar.MINUTE));
+        setCurrentTime(Calendar.getInstance().get(Calendar.HOUR_OF_DAY),
+                Calendar.getInstance().get(Calendar.MINUTE));
+    }
+
+    private void setCurrentTime(int hour, int minutes) {
+        updateHour_start.setHour(hour);
+        updateHour_start.setMinute(minutes);
+
+        updateHour_end.setHour(hour);
+        updateHour_end.setMinute(minutes);
     }
 }
