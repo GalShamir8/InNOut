@@ -11,11 +11,18 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.example.inout.R;
+import com.example.inout.common.TimeClock;
 import com.example.inout.fragments.CalendarFragment;
 import com.example.inout.fragments.UpdateHoursFragment;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
+    private Date chosenDate;
     private Bundle data;
 
     @Override
@@ -23,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setActionBar();
+
         data = new Bundle();
     }
 
@@ -106,10 +114,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openUpdateHoursForm(int year, int month, int day) {
-        data.putString("date", String.format("%d/%d/%d",day, month, year));
+        chosenDate = new Date(year, month, day);
         UpdateHoursFragment updateHoursFragment = new UpdateHoursFragment();
-        updateHoursFragment.setArguments(data);
         loadFragment(R.id.main_bottom_frame, updateHoursFragment);
+        updateHoursFragment.setOnSaveCallback(params -> saveNewTimeClock(
+                (TimeClock)params[0],
+                (TimeClock)params[1]
+                )
+        );
+    }
+
+    private void saveNewTimeClock(TimeClock start, TimeClock end) {
+        
+
     }
 
     private void loadFragment(int resource, Fragment fragment) {

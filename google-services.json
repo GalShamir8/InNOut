@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "794310117214",
+    "project_id": "innout-392fe",
+    "storage_bucket": "innout-392fe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:794310117214:android:4a5452a77aecd132adf1cf",
+        "android_client_info": {
+          "package_name": "InNOut1.gS123456"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "794310117214-l32ns4dm2til1a6n7ef8r5cjum035do9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDqwg86SApztdi4aTnLGQGtn5IJVQS-oI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "794310117214-l32ns4dm2til1a6n7ef8r5cjum035do9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
