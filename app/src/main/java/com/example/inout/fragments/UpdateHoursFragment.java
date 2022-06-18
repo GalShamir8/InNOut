@@ -1,5 +1,6 @@
 package com.example.inout.fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,12 +12,17 @@ import android.widget.TimePicker;
 
 import com.example.inout.R;
 import com.example.inout.common.Callable;
+import com.google.android.material.textview.MaterialTextView;
 
 import java.util.Calendar;
 
 
 public class UpdateHoursFragment extends Fragment {
-    private enum eValidTime {eSuccess, eError};
+    private enum eStatus {success, error};
+    private static final String SUCCESS_MSG = "Valid Hours";
+    private static final String ERROR_MSG = "Invalid End Hours";
+
+    private MaterialTextView updateHour_LBL_status;
     private TimePicker updateHour_start;
     private TimePicker updateHour_end;
 
@@ -42,6 +48,7 @@ public class UpdateHoursFragment extends Fragment {
     }
 
     private void setViews(View view) {
+        updateHour_LBL_status = view.findViewById(R.id.updateHour_LBL_status);
         updateHour_start = view.findViewById(R.id.updateHour_start);
         updateHour_end = view.findViewById(R.id.updateHour_end);
         setTimeDefaultDisplay();
@@ -55,13 +62,27 @@ public class UpdateHoursFragment extends Fragment {
 
     private void handleTimeChange(int hours, int minutes) {
         if (isValidEndTime(hours, minutes)){
-            setLabel(eValidTime.eSuccess);
+            setLabel(eStatus.success);
             save();
         }
-        setLabel(eValidTime.eError);
+        setLabel(eStatus.error);
     }
 
-    private void setLabel(eValidTime eError) {
+    private void setLabel(eStatus lblStatus) {
+        String message = "";
+        int color = 0;
+        switch (lblStatus){
+            case success:
+                message = SUCCESS_MSG;
+                color = Color.GREEN;
+                break;
+            case error:
+                message = ERROR_MSG;
+                color = Color.RED;
+                break;
+        }
+        updateHour_LBL_status.setText(message);
+        updateHour_LBL_status.setTextColor(color);
     }
 
     private boolean isValidEndTime(int endHour, int endMinute) {
