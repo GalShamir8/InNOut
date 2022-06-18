@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TimePicker;
 
 import com.example.inout.R;
-import com.google.android.material.textfield.TextInputLayout;
+import com.example.inout.common.Callable;
 
 import java.util.Calendar;
 
@@ -18,6 +18,13 @@ import java.util.Calendar;
 public class UpdateHoursFragment extends Fragment {
     private TimePicker updateHour_start;
     private TimePicker updateHour_end;
+
+    public void setOnSaveCallback(Callable onSaveCallback) {
+        this.onSaveCallback = onSaveCallback;
+    }
+
+    private Callable onSaveCallback;
+
     public UpdateHoursFragment() { }
 
     @Override
@@ -30,7 +37,6 @@ public class UpdateHoursFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_update_hours, container, false);
         setViews(view);
-        assert getArguments() != null;
         return view;
     }
 
