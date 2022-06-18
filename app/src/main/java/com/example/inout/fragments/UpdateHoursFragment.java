@@ -16,6 +16,7 @@ import java.util.Calendar;
 
 
 public class UpdateHoursFragment extends Fragment {
+    private enum eValidTime {eSuccess, eError};
     private TimePicker updateHour_start;
     private TimePicker updateHour_end;
 
@@ -44,6 +45,35 @@ public class UpdateHoursFragment extends Fragment {
         updateHour_start = view.findViewById(R.id.updateHour_start);
         updateHour_end = view.findViewById(R.id.updateHour_end);
         setTimeDefaultDisplay();
+        setListeners();
+    }
+
+    private void setListeners() {
+        updateHour_end.setOnTimeChangedListener((timePicker, hours, minutes) ->
+                handleTimeChange(hours, minutes));
+    }
+
+    private void handleTimeChange(int hours, int minutes) {
+        if (isValidEndTime(hours, minutes)){
+            setLabel(eValidTime.eSuccess);
+            save();
+        }
+        setLabel(eValidTime.eError);
+    }
+
+    private void setLabel(eValidTime eError) {
+    }
+
+    private boolean isValidEndTime(int endHour, int endMinute) {
+        int startHour = updateHour_start.getHour();
+        int startMinute = updateHour_start.getMinute();
+        if(startHour == endHour){
+            return startMinute < endMinute;
+        }
+        return startHour < endHour;
+    }
+
+    private void save() {
     }
 
     private void setTimeDefaultDisplay() {
