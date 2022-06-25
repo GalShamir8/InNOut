@@ -21,15 +21,20 @@ import java.util.Calendar;
 
 
 public class UpdateHoursFragment extends Fragment {
-    private enum eStatus {success, error, failed};
+    private enum eStatus {success, error};
     private static final String SUCCESS_MSG = "Valid Hours";
     private static final String ERROR_MSG = "Invalid End Hours";
     private static final String FAILED_SAVE_MSG = "Failed to save changes";
+    private static final String SUCCESSFULLY_SAVED = "saved";
+    private static final String ERROR_TAG = "error";
 
     private MaterialTextView updateHour_LBL_status;
     private TimePicker updateHour_start;
     private TimePicker updateHour_end;
     private MaterialButton updateHour_BTN_save;
+
+    private TimeClock startTimeClock;
+    private TimeClock endTimeClock;
 
     public void setOnSaveCallback(Callable onSaveCallback) {
         this.onSaveCallback = onSaveCallback;
@@ -72,45 +77,44 @@ public class UpdateHoursFragment extends Fragment {
         updateHour_BTN_save.setOnClickListener(e -> save());
     }
 
-    private void handleTimeChange(TimeClock timeClock) {
-        int condition = timeClock.compareTo(
-                new TimeClock(updateHour_start.getHour(),
-                updateHour_start.getMinute()));
+    private void handleTimeChange(TimeClock endTimeClock) {
+        TimeClock startTimeClock = new TimeClock(updateHour_start.getHour(),
+                updateHour_start.getMinute());
+        int condition = endTimeClock.compareTo(startTimeClock);
         if (condition > 0){
-            setLabel(eStatus.success);
+            setLabel(eStatus.success, SUCCESS_MSG);
+            setTime(startTimeClock, endTimeClock);
         }else {
-            setLabel(eStatus.error);
+            setLabel(eStatus.error, ERROR_MSG);
         }
     }
 
+    private void setTime(TimeClock startTimeClock, TimeClock endTimeClock) {
+        this.startTimeClock = startTimeClock;
+        this.endTimeClock = endTimeClock;
+    }
 
-    private void setLabel(eStatus lblStatus) {
-        String message = "";
+
+    private void setLabel(eStatus lblStatus, String message) {
         int color = 0;
         switch (lblStatus){
             case success:
-                message = SUCCESS_MSG;
                 color = Color.GREEN;
                 break;
             case error:
-                message = ERROR_MSG;
                 color = Color.RED;
                 break;
-            case failed:
-                message = FAILED_SAVE_MSG;
-                color = Color.RED;
-                break;
-
         }
         updateHour_LBL_status.setText(message);
         updateHour_LBL_status.setTextColor(color);
     }
 
     private void save() {
-        if (onSaveCallback != null){
-            onSaveCallback.call();
+        if(!onSaveCallback.call(startTimeClock, endTimeClock)){
+            setLabel(eStatus.error, FAILED_SAVE_MSG);
+            Log.e(ERROR_TAG, FAILED_SAVE_MSG);
         }else{
-            setLabel(eStatus.failed);
+            setLabel(eStatus.success, SUCCESSFULLY_SAVED);
         }
     }
 
