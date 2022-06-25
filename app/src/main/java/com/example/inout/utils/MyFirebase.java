@@ -35,17 +35,19 @@ public class MyFirebase {
         return firebaseInstance;
     }
 
-    public void saveUserTimeClock(TimeClock start, TimeClock end, String date) {
+    public boolean saveUserTimeClock(TimeClock start, TimeClock end, String date) {
         // Get user data
         // TODO: 25/06/2022 add user uid resolve
         String userUid = "tmp_uid";
-        String year = extractYearFromDateStr(date);
-        String month = extractMonthFromDateStr(date);
+        String year;
+        String month;
         int day;
         try {
+            year = extractYearFromDateStr(date);
+            month = extractMonthFromDateStr(date);
             day = Integer.parseInt(extractDayFromDateStr(date));
-        }catch (NumberFormatException e){
-            day = 0;
+        }catch(IndexOutOfBoundsException | NumberFormatException e){
+            return false;
         }
         HashMap<String, Integer> data = new HashMap<>();
         data.put(DAY_KEY, day);
@@ -54,6 +56,7 @@ public class MyFirebase {
         data.put(END_HOUR_KEY, end.getHour());
         data.put(END_MINUTE_KEY, end.getMinute());
         root.child(USERS_PATH).child(userUid).child(year).child(month).setValue(data);
+        return true;
     }
 
     private String extractDayFromDateStr(String date) {
@@ -69,10 +72,6 @@ public class MyFirebase {
     }
 
     private String extractFromSplitStr(String str, String delimiter, int position) {
-        try{
-            return str.split(delimiter)[position];
-        }catch (IndexOutOfBoundsException e){
-            return "0";
-        }
+        return str.split(delimiter)[position];
     }
 }
