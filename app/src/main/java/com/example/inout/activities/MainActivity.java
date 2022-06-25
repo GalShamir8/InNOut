@@ -109,19 +109,20 @@ public class MainActivity extends AppCompatActivity {
         loadFragment(R.id.main_center_frame, calendarFragment);
     }
 
-    private void openUpdateHoursForm(int year, int month, int day) {
+    private boolean openUpdateHoursForm(int year, int month, int day) {
         chosenDate = String.format("%d/%d/%d", year, month, day);
         UpdateHoursFragment updateHoursFragment = new UpdateHoursFragment();
-        loadFragment(R.id.main_bottom_frame, updateHoursFragment);
         updateHoursFragment.setOnSaveCallback(params -> saveNewTimeClock(
                 (TimeClock)params[0],
                 (TimeClock)params[1]
                 )
         );
+        loadFragment(R.id.main_bottom_frame, updateHoursFragment);
+        return true;
     }
 
-    private void saveNewTimeClock(TimeClock start, TimeClock end) {
-        MyFirebase.getInstance().saveUserTimeClock(start, end, chosenDate);
+    private boolean saveNewTimeClock(TimeClock start, TimeClock end) {
+        return MyFirebase.getInstance().saveUserTimeClock(start, end, chosenDate);
     }
 
     private void loadFragment(int resource, Fragment fragment) {
