@@ -11,7 +11,7 @@ public class MyFirebase {
         db = FirebaseDatabase.getInstance();
     }
 
-    public MyFirebase getInstance(){
+    public static MyFirebase getInstance(){
         if (firebaseInstance == null){
             firebaseInstance = new MyFirebase();
         }
