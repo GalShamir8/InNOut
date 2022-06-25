@@ -8,7 +8,6 @@ import java.util.HashMap;
 
 public class MyFirebase {
     private static final String DATABASE_URL = "https://innout-acc3b-default-rtdb.firebaseio.com";
-    private static final String DAY_KEY = "day";
     private static final String START_HOUR_KEY = "startHour";
     private static final String START_MINUTE_KEY = "startMin";
     private static final String END_HOUR_KEY = "endHour";
@@ -41,21 +40,20 @@ public class MyFirebase {
         String userUid = "tmp_uid";
         String year;
         String month;
-        int day;
+        String day;
         try {
             year = extractYearFromDateStr(date);
             month = extractMonthFromDateStr(date);
-            day = Integer.parseInt(extractDayFromDateStr(date));
-        }catch(IndexOutOfBoundsException | NumberFormatException e){
+            day = extractDayFromDateStr(date);
+        }catch(IndexOutOfBoundsException e){
             return false;
         }
         HashMap<String, Integer> data = new HashMap<>();
-        data.put(DAY_KEY, day);
         data.put(START_HOUR_KEY, start.getHour());
         data.put(START_MINUTE_KEY, start.getMinute());
         data.put(END_HOUR_KEY, end.getHour());
         data.put(END_MINUTE_KEY, end.getMinute());
-        root.child(USERS_PATH).child(userUid).child(year).child(month).setValue(data);
+        root.child(USERS_PATH).child(userUid).child(year).child(month).child(day).setValue(data);
         return true;
     }
 
