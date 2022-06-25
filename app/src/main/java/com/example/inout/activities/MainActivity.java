@@ -14,15 +14,11 @@ import com.example.inout.R;
 import com.example.inout.common.TimeClock;
 import com.example.inout.fragments.CalendarFragment;
 import com.example.inout.fragments.UpdateHoursFragment;
+import com.example.inout.utils.MyFirebase;
 import com.google.android.material.appbar.MaterialToolbar;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.Calendar;
-import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
-    private Date chosenDate;
+    private String chosenDate;
     private Bundle data;
 
     @Override
@@ -114,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openUpdateHoursForm(int year, int month, int day) {
-        chosenDate = new Date(year, month, day);
+        chosenDate = String.format("%d/%d/%d", year, month, day);
         UpdateHoursFragment updateHoursFragment = new UpdateHoursFragment();
         loadFragment(R.id.main_bottom_frame, updateHoursFragment);
         updateHoursFragment.setOnSaveCallback(params -> saveNewTimeClock(
@@ -125,8 +121,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void saveNewTimeClock(TimeClock start, TimeClock end) {
-        
-
+        MyFirebase.getInstance().saveUserTimeClock(start, end, chosenDate);
     }
 
     private void loadFragment(int resource, Fragment fragment) {
