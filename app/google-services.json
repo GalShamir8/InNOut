@@ -1,62 +1,34 @@
 {
   "project_info": {
-    "project_number": "794310117214",
-    "project_id": "innout-392fe",
-    "storage_bucket": "innout-392fe.appspot.com"
+    "project_number": "958710865083",
+    "firebase_url": "https://innout-acc3b-default-rtdb.firebaseio.com",
+    "project_id": "innout-acc3b",
+    "storage_bucket": "innout-acc3b.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:794310117214:android:4a5452a77aecd132adf1cf",
-        "android_client_info": {
-          "package_name": "InNOut1.gS123456"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "794310117214-l32ns4dm2til1a6n7ef8r5cjum035do9.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCDqwg86SApztdi4aTnLGQGtn5IJVQS-oI"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "794310117214-l32ns4dm2til1a6n7ef8r5cjum035do9.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:794310117214:android:d2f892cee85beef1adf1cf",
+        "mobilesdk_app_id": "1:958710865083:android:5e9e43ffcdc9fc26169d9e",
         "android_client_info": {
           "package_name": "com.example.inout"
         }
       },
       "oauth_client": [
         {
-          "client_id": "794310117214-l32ns4dm2til1a6n7ef8r5cjum035do9.apps.googleusercontent.com",
+          "client_id": "958710865083-r7ldclq2snlv401t24f8l9euf0bmvjdv.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCDqwg86SApztdi4aTnLGQGtn5IJVQS-oI"
+          "current_key": "AIzaSyAJ3OnPkXaVizWfH4Qvnjr838fYarHz2xg"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "794310117214-l32ns4dm2til1a6n7ef8r5cjum035do9.apps.googleusercontent.com",
+              "client_id": "958710865083-r7ldclq2snlv401t24f8l9euf0bmvjdv.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
