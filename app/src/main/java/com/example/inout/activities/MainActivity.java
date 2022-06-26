@@ -1,11 +1,14 @@
 package com.example.inout.activities;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,11 +18,27 @@ import com.example.inout.common.TimeClock;
 import com.example.inout.fragments.CalendarFragment;
 import com.example.inout.fragments.UpdateHoursFragment;
 import com.example.inout.utils.MyFirebase;
+import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
+import com.firebase.ui.auth.IdpResponse;
+import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private String chosenDate;
+    private FirebaseUser user;
+    private boolean isLoggedIn = false;
     private Bundle data;
+
+    private final ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
+            new FirebaseAuthUIActivityResultContract(),
+            this::onSignInResult
+    );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +47,25 @@ public class MainActivity extends AppCompatActivity {
         setActionBar();
 
         data = new Bundle();
+    }
+
+    private void loginPage() {
+
+        List<AuthUI.IdpConfig> providers = Arrays.asList(
+                new AuthUI.IdpConfig.EmailBuilder().build());
+        Intent signInIntent = AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setAvailableProviders(providers)
+                .build();
+        signInLauncher.launch(signInIntent);
+    }
+
+    private void onSignInResult(FirebaseAuthUIAuthenticationResult result) {
+        IdpResponse response = result.getIdpResponse();
+        if (result.getResultCode() == RESULT_OK) {
+            user = FirebaseAuth.getInstance().getCurrentUser();
+            Log.d("pttt", "user signed in" + user.getUid());
+        }
     }
 
     private void setActionBar() {
@@ -54,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String getCurrentTitle() {
         // TODO: 21/05/2022 add User resolving
-        return false ? "" : "Logged in as Gal";
+        return isLoggedIn ? user.getEmail() : "";
     }
 
     @Override
