@@ -1,6 +1,9 @@
 package com.example.inout.utils;
 
 import com.example.inout.common.TimeClock;
+import com.firebase.ui.auth.IdpResponse;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -21,10 +24,13 @@ public class MyFirebase {
     private static MyFirebase firebaseInstance = null;
     private FirebaseDatabase db;
     private DatabaseReference root;
+    private FirebaseUser user;
+    private FirebaseAuth auth;
 
     private MyFirebase() {
         db = FirebaseDatabase.getInstance(DATABASE_URL);
         root = db.getReference();
+        auth = FirebaseAuth.getInstance();
     }
 
     public static MyFirebase getInstance(){
@@ -71,5 +77,9 @@ public class MyFirebase {
 
     private String extractFromSplitStr(String str, String delimiter, int position) {
         return str.split(delimiter)[position];
+    }
+
+    public FirebaseUser getUser() {
+        return auth.getCurrentUser();
     }
 }

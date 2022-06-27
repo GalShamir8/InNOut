@@ -31,41 +31,14 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private String chosenDate;
-    private FirebaseUser user;
-    private boolean isLoggedIn = false;
     private Bundle data;
-
-    private final ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
-            new FirebaseAuthUIActivityResultContract(),
-            this::onSignInResult
-    );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setActionBar();
-
         data = new Bundle();
-    }
-
-    private void loginPage() {
-
-        List<AuthUI.IdpConfig> providers = Arrays.asList(
-                new AuthUI.IdpConfig.EmailBuilder().build());
-        Intent signInIntent = AuthUI.getInstance()
-                .createSignInIntentBuilder()
-                .setAvailableProviders(providers)
-                .build();
-        signInLauncher.launch(signInIntent);
-    }
-
-    private void onSignInResult(FirebaseAuthUIAuthenticationResult result) {
-        IdpResponse response = result.getIdpResponse();
-        if (result.getResultCode() == RESULT_OK) {
-            user = FirebaseAuth.getInstance().getCurrentUser();
-            Log.d("pttt", "user signed in" + user.getUid());
-        }
     }
 
     private void setActionBar() {
@@ -91,8 +64,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String getCurrentTitle() {
-        // TODO: 21/05/2022 add User resolving
-        return isLoggedIn ? user.getEmail() : "";
+        return MyFirebase.getInstance().getUser().getEmail();
     }
 
     @Override
