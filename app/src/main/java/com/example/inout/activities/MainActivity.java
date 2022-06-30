@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.inout.R;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private Bundle data;
     private ImageView  main_IMG_background;
     private enum eViewState {background, center, bottom};
+    private TextView main_TXT_appTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +34,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setActionBar();
         setBackground();
+        setAppTitle();
         setUserView();
         data = new Bundle();
     }
+
+    private void setAppTitle() {
+        main_TXT_appTitle = findViewById(R.id.main_TXT_appTitle);
+    }
+
 
     private void setBackground() {
         main_IMG_background = (ImageView) findViewById(R.id.main_IMG_background);
@@ -51,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         switch(viewStatus){
             case background:
                 main_IMG_background.setVisibility(visibility);
+                main_TXT_appTitle.setVisibility(visibility);
                 break;
             case bottom:
                 findViewById(R.id.main_bottom_frame).setVisibility(visibility);
@@ -104,7 +113,6 @@ public class MainActivity extends AppCompatActivity {
                 super.onBackPressed();
                 return true;
 
-            // TODO: 28/05/2022 attached to home page
             // home icon pressed
             case R.id.home_action:
                 setUserView();

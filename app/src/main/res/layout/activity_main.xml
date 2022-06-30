@@ -8,7 +8,15 @@
     tools:context=".activities.MainActivity">
 
     <include layout="@layout/activity_action_bar" />
-
+        <TextView
+            android:id="@+id/main_TXT_appTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold|italic"
+            android:text="@string/welcome_to_in_out_app"
+            android:layout_margin="60dp"
+            />
         <ImageView
             android:id="@+id/main_IMG_background"
             android:layout_width="match_parent"

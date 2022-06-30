@@ -8,4 +8,5 @@
     <string name="start_hour">Start Hour</string>
     <string name="end_hour">End Hour</string>
     <string name="save">Save</string>
+    <string name="welcome_to_in_out_app"><![CDATA[Welcome to In&Out App]]></string>
 </resources>
