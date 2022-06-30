@@ -1,44 +1,64 @@
 package com.example.inout.activities;
 
-import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NavUtils;
 import androidx.fragment.app.Fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.example.inout.R;
 import com.example.inout.common.TimeClock;
 import com.example.inout.fragments.CalendarFragment;
 import com.example.inout.fragments.UpdateHoursFragment;
 import com.example.inout.utils.MyFirebase;
-import com.firebase.ui.auth.AuthUI;
-import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
-import com.firebase.ui.auth.IdpResponse;
-import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult;
 import com.google.android.material.appbar.MaterialToolbar;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    private final String IMG_URL = "https://cdn.wallpapersafari.com/99/30/LrD3p9.jpg";
     private String chosenDate;
     private Bundle data;
+    private ImageView  main_IMG_background;
+    private enum eViewState {background, center, bottom};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setActionBar();
+        setBackground();
+        setUserView();
         data = new Bundle();
+    }
+
+    private void setBackground() {
+        main_IMG_background = (ImageView) findViewById(R.id.main_IMG_background);
+        Glide.with(this).load(IMG_URL).into(main_IMG_background);
+    }
+
+    private void setUserView() {
+        setViewVisibility(eViewState.background, View.VISIBLE);
+        setViewVisibility(eViewState.center, View.INVISIBLE);
+        setViewVisibility(eViewState.bottom, View.INVISIBLE);
+    }
+
+    private void setViewVisibility(eViewState viewStatus, int visibility) {
+        switch(viewStatus){
+            case background:
+                main_IMG_background.setVisibility(visibility);
+                break;
+            case bottom:
+                findViewById(R.id.main_bottom_frame).setVisibility(visibility);
+                break;
+            case center:
+                findViewById(R.id.main_center_frame).setVisibility(visibility);
+                break;
+        }
     }
 
     private void setActionBar() {
@@ -64,7 +84,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String getCurrentTitle() {
-        return MyFirebase.getInstance().getUser().getEmail();
+//        return MyFirebase.getInstance().getUser().getEmail();
+        return "MyFirebase.getInstance().getUser().getEmail()";
     }
 
     @Override
@@ -86,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
             // TODO: 28/05/2022 attached to home page
             // home icon pressed
             case R.id.home_action:
-                NavUtils.navigateUpFromSameTask(this);
+                setUserView();
                 return true;
 
             case R.id.updateProfile_action:
@@ -110,6 +131,9 @@ public class MainActivity extends AppCompatActivity {
     private void logout() { }
 
     private void updateHours() {
+        setViewVisibility(eViewState.center, View.VISIBLE);
+        setViewVisibility(eViewState.bottom, View.VISIBLE);
+        setViewVisibility(eViewState.background, View.INVISIBLE);
         CalendarFragment calendarFragment = new CalendarFragment();
         calendarFragment.setOnDatePickCallback((params) -> openUpdateHoursForm(
                 (int)params[0],
