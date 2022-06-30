@@ -1,22 +1,25 @@
 package com.example.inout.utils;
 
+import androidx.annotation.NonNull;
+
 import com.example.inout.common.TimeClock;
-import com.firebase.ui.auth.IdpResponse;
+import com.example.inout.models.User;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.HashMap;
+import com.google.firebase.database.ValueEventListener;
 
 public class MyFirebase {
     private static final String DATABASE_URL = "https://innout-acc3b-default-rtdb.firebaseio.com";
-    private static final String START_HOUR_KEY = "startHour";
-    private static final String START_MINUTE_KEY = "startMin";
-    private static final String END_HOUR_KEY = "endHour";
-    private static final String END_MINUTE_KEY = "endMin";
     private static final String USERS_PATH = "users";
     private static final String DATE_DELIMITER = "/";
+    private static final String ENTER_FLAG = "isFirstEnter";
+    public static final String START_TIME_KEY = "start";
+    public static final String END_TIME_KEY = "end";
     private static final int DAY_POS = 2;
     private static final int MONTH_POS = 1;
     private static final int YEAR_POS = 0;
@@ -26,6 +29,7 @@ public class MyFirebase {
     private DatabaseReference root;
     private FirebaseUser user;
     private FirebaseAuth auth;
+    private User userData;
 
     private MyFirebase() {
         db = FirebaseDatabase.getInstance(DATABASE_URL);
@@ -54,12 +58,12 @@ public class MyFirebase {
         }catch(IndexOutOfBoundsException e){
             return false;
         }
-        HashMap<String, Integer> data = new HashMap<>();
-        data.put(START_HOUR_KEY, start.getHour());
-        data.put(START_MINUTE_KEY, start.getMinute());
-        data.put(END_HOUR_KEY, end.getHour());
-        data.put(END_MINUTE_KEY, end.getMinute());
-        root.child(USERS_PATH).child(userUid).child(year).child(month).child(day).setValue(data);
+        userData = new User();
+        userData.setUuid(userUid);
+        userData.buildUserTimeClockData(year, month, day, start, end);
+
+        root.child(USERS_PATH).child(userData.getUuid()).setValue(userData);
+
         return true;
     }
 
@@ -81,5 +85,17 @@ public class MyFirebase {
 
     public FirebaseUser getUser() {
         return auth.getCurrentUser();
+    }
+
+    public void readUserData() {
+        root.child(USERS_PATH).child(getUser().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                userData = snapshot.getValue(User.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) { }
+        });
     }
 }
