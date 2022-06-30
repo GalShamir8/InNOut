@@ -7,17 +7,6 @@ import java.util.HashMap;
 
 public class User {
     private String uuid = "";
-    /*  the map structure is as follow:
-        year: {
-            month: [
-                day: {
-                    startTime: TimeClock,
-                    endTime: TimeClock
-                }
-            ]
-       }
-     */
-    private boolean isFirstLogin = false;
     private HashMap<String, YearDataHelper> timeClockData;
 
     public User() {
@@ -49,11 +38,4 @@ public class User {
         this.timeClockData = timeClockData;
     }
 
-    public boolean isFirstLogin() {
-        return isFirstLogin;
-    }
-
-    public void setFirstLogin(boolean firstLogin) {
-        isFirstLogin = firstLogin;
-    }
 }
