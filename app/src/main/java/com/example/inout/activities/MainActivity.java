@@ -170,7 +170,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean saveNewTimeClock(TimeClock start, TimeClock end) {
-        return MyFirebase.getInstance().saveUserTimeClock(start, end, chosenDate);
+        MyFirebase.getInstance().saveUserTimeClock(start, end, chosenDate);
+        return renderUI();
     }
 
     private void loadFragment(int resource, Fragment fragment) {
@@ -183,11 +184,12 @@ public class MainActivity extends AppCompatActivity {
         setViewVisibility(eViewState.bottom, View.INVISIBLE);
         setViewVisibility(eViewState.background, View.INVISIBLE);
         UpdateProfileFragment updateProfileFragment = new UpdateProfileFragment();
-        updateProfileFragment.setOnUpdateCompleteCallback(params -> {
-            setUserView();
-            return true;
-        });
+        updateProfileFragment.setOnUpdateCompleteCallback(params -> renderUI());
         loadFragment(R.id.main_center_frame, updateProfileFragment);
     }
 
+    private boolean renderUI() {
+        startActivity(new Intent(this, MainActivity.class));
+        return true;
+    }
 }
