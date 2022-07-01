@@ -6,8 +6,10 @@ import androidx.annotation.NonNull;
 
 import com.example.inout.common.Callable;
 import com.example.inout.common.TimeClock;
+import com.example.inout.models.MonthData;
 import com.example.inout.models.User;
 
+import com.example.inout.models.UserData;
 import com.example.inout.models.YearDataHelper;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -37,13 +39,13 @@ public class MyFirebase {
     private DatabaseReference root;
     private FirebaseUser user;
     private FirebaseAuth auth;
-    private User userData;
+    private UserData userData;
 
     private MyFirebase() {
         db = FirebaseDatabase.getInstance(DATABASE_URL);
         root = db.getReference();
         auth = FirebaseAuth.getInstance();
-        userData = new User();
+        userData = new UserData();
     }
 
     public static MyFirebase getInstance(){
@@ -59,15 +61,12 @@ public class MyFirebase {
         }
     }
 
-    public YearDataHelper.MonthDataHelper getUserMonthData(int month) {
+    public MonthData getUserMonthData(int month) {
         readUserData();
         return userData.getMonthData(Calendar.getInstance().get(Calendar.YEAR), month);
     }
 
     public boolean saveUserTimeClock(TimeClock start, TimeClock end, String date) {
-        // Get user data
-        // TODO: 25/06/2022 add user uid resolve
-        String userUid = "tmp_uid";
         String year;
         String month;
         String day;
@@ -78,9 +77,8 @@ public class MyFirebase {
         }catch(IndexOutOfBoundsException e){
             return false;
         }
-        userData.buildUserTimeClockData(year, month, day, start, end);
-
-        root.child(USERS_PATH).child(userData.getUuid()).setValue(userData.getTimeClockData());
+        userData.setData(year, month, day, start, end);
+        root.child(USERS_PATH).child(getUser().getUid()).setValue(userData);
 
         return true;
     }
@@ -106,11 +104,10 @@ public class MyFirebase {
     }
 
     public void readUserData() {
-
         root.child(USERS_PATH).child(getUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                userData.setTimeClockData(snapshot.getValue(HashMap.class));
+                snapshot.getValue(UserData.class);
             }
 
             @Override

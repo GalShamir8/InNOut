@@ -8,6 +8,8 @@ public class TimeClock implements Comparable{
     private int hour;
     private int minute;
 
+    public TimeClock() { }
+
     public TimeClock(int hour, int minute) {
         this.hour = hour;
         this.minute = minute;

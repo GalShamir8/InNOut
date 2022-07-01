@@ -1,7 +1,5 @@
 package com.example.inout.fragments;
 
-import android.annotation.SuppressLint;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,21 +11,17 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 
 import com.example.inout.R;
-import com.example.inout.common.TimeClock;
-import com.example.inout.models.YearDataHelper;
+import com.example.inout.models.DayData;
+import com.example.inout.models.MonthData;
 import com.example.inout.utils.MyFirebase;
 import com.google.android.material.textview.MaterialTextView;
-import com.google.firebase.auth.FirebaseUser;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiConsumer;
 
 public class TableFragment extends Fragment {
     private TableLayout table_TBL_monthTable;
-    private YearDataHelper.MonthDataHelper monthData;
+    private MonthData monthData;
     private View view;
 
     public TableFragment() { }
@@ -55,7 +49,7 @@ public class TableFragment extends Fragment {
 
     private void addTableRows() {
         setHeaders();
-        if(monthData.getDaysData().size() == 0){
+        if(monthData == null){
             TableRow tableRow = new TableRow(view.getContext());
             MaterialTextView noDataTXT = new MaterialTextView(view.getContext());
             noDataTXT.setText("No records yet...");
@@ -64,15 +58,15 @@ public class TableFragment extends Fragment {
 
             table_TBL_monthTable.addView(tableRow);
         }else {
-            for (Map.Entry<String, HashMap<String, TimeClock>> e :  monthData.getDaysData().entrySet()){
+            for (Map.Entry<String, DayData> e :  monthData.getDaysData().entrySet()){
                 TableRow tableRow = new TableRow(view.getContext());
                 MaterialTextView dayColData = new MaterialTextView(view.getContext());
                 MaterialTextView startHourColData = new MaterialTextView(view.getContext());
                 MaterialTextView endHourColData = new MaterialTextView(view.getContext());
 
                 dayColData.setText(e.getKey());
-                startHourColData.setText(e.getValue().get(MyFirebase.START_TIME_KEY).toString());
-                endHourColData.setText(e.getValue().get(MyFirebase.END_TIME_KEY).toString());
+                startHourColData.setText(e.getValue().getStart().toString());
+                endHourColData.setText(e.getValue().getEnd().toString());
 
                 dayColData.setPadding(16,16,16,16 );
                 startHourColData.setPadding(16,16,16,16);
