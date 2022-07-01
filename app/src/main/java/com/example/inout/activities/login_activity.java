@@ -27,6 +27,7 @@ public class login_activity extends AppCompatActivity {
     private void onSignInResult(FirebaseAuthUIAuthenticationResult result) {
         IdpResponse response = result.getIdpResponse();
         if (result.getResultCode() == RESULT_OK) {
+            MyFirebase.getInstance().setUserData();
             openApp();
         }
     }
