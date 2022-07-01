@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         setBackground();
         setAppTitle();
         setUserView();
+
     }
 
     private void setAppTitle() {
@@ -142,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
     private void logout() {
         MyFirebase.getInstance().logout();
         startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 
     private void updateHours() {
@@ -189,6 +191,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean renderUI() {
+        finish();
         startActivity(new Intent(this, MainActivity.class));
         return true;
     }

@@ -41,6 +41,7 @@ public class MyFirebase {
         root = db.getReference();
         auth = FirebaseAuth.getInstance();
         userData = new UserData();
+        readUserData();
     }
 
     public static MyFirebase getInstance(){
@@ -64,8 +65,19 @@ public class MyFirebase {
     }
 
     public MonthData getUserMonthData(int month) {
-        readUserData();
         return userData.getMonthData(Calendar.getInstance().get(Calendar.YEAR), month);
+    }
+
+    private void readMonthData(DatabaseReference root, String monthKey, Callable callback) {
+        root.child(monthKey).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                callback.call(snapshot.getValue(MonthData.class));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) { }
+        });
     }
 
     public boolean saveUserTimeClock(TimeClock start, TimeClock end, String date) {
