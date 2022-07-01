@@ -113,8 +113,8 @@ public class MyFirebase {
         });
     }
 
-    public void handleLogin(String username, String password, Callable onSuccess, Callable onFail){
-        auth.createUserWithEmailAndPassword(username, password).addOnCompleteListener(task -> {
+    public void handleSignUp(String email, String password, Callable onSuccess, Callable onFail){
+        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 onSuccess.call();
             } else {
@@ -122,5 +122,15 @@ public class MyFirebase {
                 onFail.call(task.getException().getMessage());
             }
         });
+    }
+    public void handleLogin(String email, String password, Callable onSuccess, Callable onFail){
+        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    onSuccess.call();
+                } else {
+                    Log.w("TAG", "createUserWithEmail:failure", task.getException());
+                    onFail.call(task.getException().getMessage());
+                }
+            });
     }
 }

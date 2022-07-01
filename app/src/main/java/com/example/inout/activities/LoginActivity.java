@@ -30,8 +30,21 @@ public class LoginActivity extends AppCompatActivity {
         login_EDT_password = findViewById(R.id.login_EDT_password);
         login_EDT_username = findViewById(R.id.login_EDT_username);
         login_LBL_status = findViewById(R.id.login_LBL_status);
-        MaterialButton login_BTN_send = findViewById(R.id.login_BTN_send);
-        login_BTN_send.setOnClickListener(e -> handleLogin());
+        MaterialButton login_BTN_login = findViewById(R.id.login_BTN_login);
+        login_BTN_login.setOnClickListener(e -> handleLogin());
+        MaterialButton login_BTN_signUp = findViewById(R.id.login_BTN_signUp);
+        login_BTN_signUp.setOnClickListener(e -> handleSignUp());
+    }
+
+    private void handleSignUp() {
+        String password = getPassword();
+        String username = getEmail();
+        MyFirebase.getInstance().handleSignUp(
+                username,
+                password,
+                params -> onSuccessCallback(),
+                params -> onFailCallback((String) params[0])
+        );
     }
 
     private void handleLogin() {
@@ -54,7 +67,6 @@ public class LoginActivity extends AppCompatActivity {
         login_LBL_status.setTextColor(Color.RED);
         login_LBL_status.setText(message);
     }
-
     private boolean onSuccessCallback() {
         openApp();
         return true;
