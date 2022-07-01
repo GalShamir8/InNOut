@@ -22,18 +22,18 @@ public class UserData {
     }
 
     public void setData(String year, String month, String day, TimeClock start, TimeClock end) {
-        YearData yearData = hoursData.get(year);
+        YearData yearData = hoursData.get(MyFirebase.keyWrapper(year));
         if (yearData == null){
             yearData = new YearData();
         }
         yearData.setData(month, day, start, end);
-        hoursData.put(MyFirebase.KEY_PREFIX + year, yearData);
+        hoursData.put(MyFirebase.keyWrapper(year), yearData);
     }
 
     public MonthData getMonthData(int year, int month) {
         try{
-            return hoursData.get(MyFirebase.KEY_PREFIX + year).getMonthsData()
-                    .get(MyFirebase.KEY_PREFIX +month);
+            return hoursData.get(MyFirebase.keyWrapper(String.valueOf(year))).getMonthsData()
+                    .get(MyFirebase.keyWrapper(String.valueOf(month)));
         }catch (NullPointerException e){
             return null;
         }

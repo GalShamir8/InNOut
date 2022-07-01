@@ -50,6 +50,15 @@ public class MyFirebase {
         return firebaseInstance;
     }
 
+    /**
+     * In order to avoid firebase mismatch between arrays indexes to map keys, wrap all keys with the KEY_PREFIX
+     * @param key map key in the DB
+     * @return string representative of the key with the KEY_PREFIX
+     */
+    public static String keyWrapper(String key) {
+        return KEY_PREFIX + key;
+    }
+
     public void logout() {
         auth.signOut();
     }

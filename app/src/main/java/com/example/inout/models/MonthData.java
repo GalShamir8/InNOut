@@ -22,11 +22,11 @@ public class MonthData {
     }
 
     public void setData(String day, TimeClock start, TimeClock end) {
-        DayData dayData = daysData.get(day);
+        DayData dayData = daysData.get(MyFirebase.keyWrapper(day));
         if (dayData == null){
             dayData = new DayData();
         }
         dayData.setStart(start).setEnd(end);
-        daysData.put(MyFirebase.KEY_PREFIX + day, dayData);
+        daysData.put(MyFirebase.keyWrapper(day), dayData);
     }
 }
