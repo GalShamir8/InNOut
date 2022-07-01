@@ -4,6 +4,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -136,7 +137,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void logout() { }
+    private void logout() {
+        MyFirebase.getInstance().logout();
+        startActivity(new Intent(this, LoginActivity.class));
+    }
 
     private void updateHours() {
         setViewVisibility(eViewState.center, View.VISIBLE);

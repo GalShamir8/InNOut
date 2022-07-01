@@ -50,6 +50,10 @@ public class MyFirebase {
         return firebaseInstance;
     }
 
+    public void logout() {
+        auth.signOut();
+    }
+
     public MonthData getUserMonthData(int month) {
         readUserData();
         return userData.getMonthData(Calendar.getInstance().get(Calendar.YEAR), month);

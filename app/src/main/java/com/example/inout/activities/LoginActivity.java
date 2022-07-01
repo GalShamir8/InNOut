@@ -13,7 +13,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 
 
-public class login_activity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     private EditText login_EDT_password;
     private EditText login_EDT_username;

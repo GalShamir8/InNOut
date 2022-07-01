@@ -12,7 +12,7 @@
         android:supportsRtl="false"
         android:theme="@style/Theme.InOut">
         <activity
-            android:name=".activities.login_activity"
+            android:name=".activities.LoginActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
