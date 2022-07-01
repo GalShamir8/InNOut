@@ -179,6 +179,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateProfile() {
+        setViewVisibility(eViewState.center, View.VISIBLE);
+        setViewVisibility(eViewState.bottom, View.INVISIBLE);
+        setViewVisibility(eViewState.background, View.INVISIBLE);
         UpdateProfileFragment updateProfileFragment = new UpdateProfileFragment();
         updateProfileFragment.setOnUpdateCompleteCallback(params -> {
             setUserView();
