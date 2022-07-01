@@ -135,7 +135,7 @@ public class MyFirebase {
     }
 
     public void updateUserPassword(String newPassword,Callable onSuccess, Callable onFail){
-        user.updatePassword(newPassword).addOnCompleteListener(task -> {
+        getUser().updatePassword(newPassword).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 onSuccess.call();
             } else {
@@ -145,7 +145,7 @@ public class MyFirebase {
         });
     }
     public void updateUserEmail(String newEmail,Callable onSuccess, Callable onFail){
-        user.updateEmail(newEmail).addOnCompleteListener(task -> {
+        getUser().updateEmail(newEmail).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 onSuccess.call();
             } else {
