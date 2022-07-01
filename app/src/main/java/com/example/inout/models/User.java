@@ -14,12 +14,13 @@ public class User {
     }
 
     public void buildUserTimeClockData(String year, String month, String day, TimeClock start, TimeClock end){
-        timeClockData.put(year, new YearDataHelper()
-                .setYear(year)
-                .addMonthData(new YearDataHelper
-                        .MonthDataHelper()
-                        .addDayData(MyFirebase.START_TIME_KEY, day, start)
-                        .addDayData(MyFirebase.END_TIME_KEY, day, end)));
+        HashMap<String, YearDataHelper.MonthDataHelper> monthsData = new HashMap<>();
+        YearDataHelper.MonthDataHelper monthData = new YearDataHelper.MonthDataHelper()
+                .addDayData(MyFirebase.START_TIME_KEY, day, start)
+                .addDayData(MyFirebase.END_TIME_KEY, day, end)
+                .setMonth(month);
+        monthsData.put(month, monthData);
+        timeClockData.put(year, new YearDataHelper().setYear(year).setMonthsData(monthsData));
     }
 
     public String getUuid() {
