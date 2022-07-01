@@ -1,5 +1,9 @@
 package com.example.inout.common;
 
+import androidx.annotation.NonNull;
+
+import java.util.Locale;
+
 public class TimeClock implements Comparable{
     private int hour;
     private int minute;
@@ -36,5 +40,11 @@ public class TimeClock implements Comparable{
             return Integer.compare(minute, otherMinute);
         }
         return Integer.compare(hour , otherHour);
+    }
+
+    @NonNull
+    @Override
+    public String toString(){
+        return String.format(Locale.US,"%d:%d", hour, minute);
     }
 }
