@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.UpdateProfileFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:layout_margin="20dp"
+        >
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="top"
+            android:text="@string/update_profile"
+            android:textStyle="italic|bold"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_gravity="top">
+            <EditText
+                android:id="@+id/update_EDT_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/enter_email"
+                android:layout_margin="20dp"
+                />
+
+            <EditText
+                android:id="@+id/update_EDT_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/enter_password"
+                android:layout_margin="20dp"
+                />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/update_LBL_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+        </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/update_BTN_send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/send"
+                android:backgroundTint="@color/teal_700"
+                android:textColor="@color/white"
+                app:cornerRadius="10dp"
+                android:layout_gravity="end"
+                android:layout_margin="20dp"
+                />
+    </LinearLayout>
+</FrameLayout>

@@ -131,6 +131,27 @@ public class MyFirebase {
                     Log.w("TAG", "createUserWithEmail:failure", task.getException());
                     onFail.call(task.getException().getMessage());
                 }
-            });
+        });
+    }
+
+    public void updateUserPassword(String newPassword,Callable onSuccess, Callable onFail){
+        user.updatePassword(newPassword).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                onSuccess.call();
+            } else {
+                Log.w("TAG", "updatePassword:failure", task.getException());
+                onFail.call(task.getException().getMessage());
+            }
+        });
+    }
+    public void updateUserEmail(String newEmail,Callable onSuccess, Callable onFail){
+        user.updateEmail(newEmail).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                onSuccess.call();
+            } else {
+                Log.w("TAG", "createUserEmail:failure", task.getException());
+                onFail.call(task.getException().getMessage());
+            }
+        });
     }
 }

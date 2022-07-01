@@ -15,10 +15,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.inout.R;
+import com.example.inout.common.Callable;
 import com.example.inout.common.TimeClock;
 import com.example.inout.fragments.CalendarFragment;
 import com.example.inout.fragments.TableFragment;
 import com.example.inout.fragments.UpdateHoursFragment;
+import com.example.inout.fragments.UpdateProfileFragment;
 import com.example.inout.utils.MyFirebase;
 import com.google.android.material.appbar.MaterialToolbar;
 
@@ -176,6 +178,13 @@ public class MainActivity extends AppCompatActivity {
                 replace(resource, fragment).commit();
     }
 
-    private void updateProfile() { }
+    private void updateProfile() {
+        UpdateProfileFragment updateProfileFragment = new UpdateProfileFragment();
+        updateProfileFragment.setOnUpdateCompleteCallback(params -> {
+            setUserView();
+            return true;
+        });
+        loadFragment(R.id.main_center_frame, updateProfileFragment);
+    }
 
 }
