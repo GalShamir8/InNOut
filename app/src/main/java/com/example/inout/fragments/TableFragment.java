@@ -64,7 +64,7 @@ public class TableFragment extends Fragment {
                 MaterialTextView startHourColData = new MaterialTextView(view.getContext());
                 MaterialTextView endHourColData = new MaterialTextView(view.getContext());
 
-                dayColData.setText(e.getKey());
+                dayColData.setText(e.getKey().split(MyFirebase.KEY_PREFIX)[1]);
                 startHourColData.setText(e.getValue().getStart().toString());
                 endHourColData.setText(e.getValue().getEnd().toString());
 

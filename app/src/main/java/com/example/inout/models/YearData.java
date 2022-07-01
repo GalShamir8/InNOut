@@ -1,6 +1,7 @@
 package com.example.inout.models;
 
 import com.example.inout.common.TimeClock;
+import com.example.inout.utils.MyFirebase;
 
 import java.util.HashMap;
 
@@ -26,5 +27,6 @@ public class YearData {
             monthData = new MonthData();
         }
         monthData.setData(day, start, end);
+        monthsData.put(MyFirebase.KEY_PREFIX + month, monthData);
     }
 }

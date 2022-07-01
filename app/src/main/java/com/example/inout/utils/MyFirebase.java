@@ -7,10 +7,8 @@ import androidx.annotation.NonNull;
 import com.example.inout.common.Callable;
 import com.example.inout.common.TimeClock;
 import com.example.inout.models.MonthData;
-import com.example.inout.models.User;
 
 import com.example.inout.models.UserData;
-import com.example.inout.models.YearDataHelper;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -24,12 +22,9 @@ import java.util.HashMap;
 
 
 public class MyFirebase {
-    private static final String DATABASE_URL = "https://innout-acc3b-default-rtdb.firebaseio.com";
+    public static final String KEY_PREFIX = "_";
     private static final String USERS_PATH = "users";
     private static final String DATE_DELIMITER = "/";
-    private static final String ENTER_FLAG = "isFirstEnter";
-    public static final String START_TIME_KEY = "start";
-    public static final String END_TIME_KEY = "end";
     private static final int DAY_POS = 2;
     private static final int MONTH_POS = 1;
     private static final int YEAR_POS = 0;
@@ -42,7 +37,7 @@ public class MyFirebase {
     private UserData userData;
 
     private MyFirebase() {
-        db = FirebaseDatabase.getInstance(DATABASE_URL);
+        db = FirebaseDatabase.getInstance();
         root = db.getReference();
         auth = FirebaseAuth.getInstance();
         userData = new UserData();
@@ -53,12 +48,6 @@ public class MyFirebase {
             firebaseInstance = new MyFirebase();
         }
         return firebaseInstance;
-    }
-
-    public void setUserData(){
-        if (getUser() != null){
-            readUserData();
-        }
     }
 
     public MonthData getUserMonthData(int month) {
@@ -78,7 +67,9 @@ public class MyFirebase {
             return false;
         }
         userData.setData(year, month, day, start, end);
-        root.child(USERS_PATH).child(getUser().getUid()).setValue(userData);
+        HashMap<String, UserData> data = new HashMap<>();
+        data.put(getUser().getUid(), userData);
+        root.child(USERS_PATH).setValue(data);
 
         return true;
     }
@@ -107,7 +98,10 @@ public class MyFirebase {
         root.child(USERS_PATH).child(getUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                snapshot.getValue(UserData.class);
+                UserData userDataSnapshot = snapshot.getValue(UserData.class);
+                if (userDataSnapshot != null) {
+                    userData = userDataSnapshot;
+                }
             }
 
             @Override
