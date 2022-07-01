@@ -50,7 +50,7 @@ public class TableFragment extends Fragment {
 
     private void setTableData() {
        monthData = MyFirebase.getInstance().
-                getUserMonthData(Calendar.getInstance().get(Calendar.MONTH));
+                getUserMonthData(Calendar.getInstance().get(Calendar.MONTH) + 1); // month are 0 offset index
     }
 
     private void addTableRows() {
