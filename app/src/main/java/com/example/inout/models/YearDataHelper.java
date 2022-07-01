@@ -2,19 +2,14 @@ package com.example.inout.models;
 
 import com.example.inout.common.TimeClock;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class YearDataHelper {
      private String year;
-     private ArrayList<MonthDataHelper> monthsData;
+     private HashMap<String, MonthDataHelper> monthsData;
 
      public YearDataHelper() {
-          monthsData = new ArrayList<>();
-     }
-     public YearDataHelper addMonthData(MonthDataHelper monthData){
-          monthsData.add(monthData);
-          return this;
+          monthsData = new HashMap<>();
      }
 
      public String getYear() {
@@ -26,11 +21,11 @@ public class YearDataHelper {
           return this;
      }
 
-     public ArrayList<MonthDataHelper> getMonthsData() {
+     public HashMap<String, MonthDataHelper> getMonthsData() {
           return monthsData;
      }
 
-     public YearDataHelper setMonthsData(ArrayList<MonthDataHelper> monthsData) {
+     public YearDataHelper setMonthsData(HashMap<String, MonthDataHelper> monthsData) {
           this.monthsData = monthsData;
           return this;
      }
