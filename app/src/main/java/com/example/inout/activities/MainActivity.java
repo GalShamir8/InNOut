@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.example.inout.R;
 import com.example.inout.common.TimeClock;
 import com.example.inout.fragments.CalendarFragment;
+import com.example.inout.fragments.TableFragment;
 import com.example.inout.fragments.UpdateHoursFragment;
 import com.example.inout.utils.MyFirebase;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -53,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
         setViewVisibility(eViewState.background, View.VISIBLE);
         setViewVisibility(eViewState.center, View.INVISIBLE);
         setViewVisibility(eViewState.bottom, View.INVISIBLE);
+        TableFragment fragment = new TableFragment();
+        loadFragment(R.id.main_center_frame, fragment);
     }
 
     private void setViewVisibility(eViewState viewStatus, int visibility) {
@@ -60,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
             case background:
                 main_IMG_background.setVisibility(visibility);
                 main_TXT_appTitle.setVisibility(visibility);
+                findViewById(R.id.main_center_frame).setVisibility(visibility);
                 break;
             case bottom:
                 findViewById(R.id.main_bottom_frame).setVisibility(visibility);
