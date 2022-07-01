@@ -39,4 +39,7 @@ public class User {
         this.timeClockData = timeClockData;
     }
 
+    public YearDataHelper.MonthDataHelper getMonthData(int year, int month) {
+        return timeClockData.get(String.valueOf(year)).getMonthsData().get(month);
+    }
 }
