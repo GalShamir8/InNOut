@@ -9,4 +9,7 @@
     <string name="end_hour">End Hour</string>
     <string name="save">Save</string>
     <string name="welcome_to_in_out_app"><![CDATA[Welcome to In&Out App]]></string>
+    <string name="date_column">Day</string>
+    <string name="start_hour_column">Start Hour</string>
+    <string name="end_hour_column">End Hour</string>
 </resources>
