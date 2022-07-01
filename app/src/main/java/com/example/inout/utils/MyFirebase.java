@@ -1,7 +1,10 @@
 package com.example.inout.utils;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
+import com.example.inout.common.Callable;
 import com.example.inout.common.TimeClock;
 import com.example.inout.models.User;
 
@@ -15,6 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
+import java.util.HashMap;
 
 
 public class MyFirebase {
@@ -76,7 +80,7 @@ public class MyFirebase {
         }
         userData.buildUserTimeClockData(year, month, day, start, end);
 
-        root.child(USERS_PATH).child(userData.getUuid()).setValue(userData);
+        root.child(USERS_PATH).child(userData.getUuid()).setValue(userData.getTimeClockData());
 
         return true;
     }
@@ -106,11 +110,22 @@ public class MyFirebase {
         root.child(USERS_PATH).child(getUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                userData = snapshot.getValue(User.class);
+                userData.setTimeClockData(snapshot.getValue(HashMap.class));
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) { }
+        });
+    }
+
+    public void handleLogin(String username, String password, Callable onSuccess, Callable onFail){
+        auth.createUserWithEmailAndPassword(username, password).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                onSuccess.call();
+            } else {
+                Log.w("TAG", "createUserWithEmail:failure", task.getException());
+                onFail.call(task.getException().getMessage());
+            }
         });
     }
 }

@@ -1,42 +1,72 @@
 package com.example.inout.activities;
 
-import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.EditText;
 
 import com.example.inout.R;
 import com.example.inout.utils.MyFirebase;
-import com.firebase.ui.auth.AuthUI;
-import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
-import com.firebase.ui.auth.IdpResponse;
-import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textview.MaterialTextView;
 
-import java.util.Arrays;
-import java.util.List;
 
 public class login_activity extends AppCompatActivity {
 
-    private final ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
-            new FirebaseAuthUIActivityResultContract(),
-            this::onSignInResult
-    );
-
-    private void onSignInResult(FirebaseAuthUIAuthenticationResult result) {
-        IdpResponse response = result.getIdpResponse();
-        if (result.getResultCode() == RESULT_OK) {
-            MyFirebase.getInstance().setUserData();
-            openApp();
-        }
-    }
-
+    private EditText login_EDT_password;
+    private EditText login_EDT_username;
+    private MaterialTextView login_LBL_status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        setViews();
+    }
+
+    private void setViews() {
+        login_EDT_password = findViewById(R.id.login_EDT_password);
+        login_EDT_username = findViewById(R.id.login_EDT_username);
+        login_LBL_status = findViewById(R.id.login_LBL_status);
+        MaterialButton login_BTN_send = findViewById(R.id.login_BTN_send);
+        login_BTN_send.setOnClickListener(e -> handleLogin());
+    }
+
+    private void handleLogin() {
+        String password = getPassword();
+        String username = getEmail();
+        MyFirebase.getInstance().handleLogin(
+                username,
+                password,
+                params -> onSuccessCallback(),
+                params -> onFailCallback((String) params[0])
+        );
+    }
+
+    private boolean onFailCallback(String message) {
+        setStatus(message);
+        return true;
+    }
+
+    private void setStatus(String message) {
+        login_LBL_status.setTextColor(Color.RED);
+        login_LBL_status.setText(message);
+    }
+
+    private boolean onSuccessCallback() {
+        openApp();
+        return true;
+    }
+
+
+    private String getEmail() {
+        return login_EDT_username.getText().toString();
+    }
+
+    private String getPassword() {
+        return login_EDT_password.getText().toString();
     }
 
     @Override
@@ -45,19 +75,6 @@ public class login_activity extends AppCompatActivity {
         if(MyFirebase.getInstance().getUser() != null){
             openApp();
         }
-        else{
-            login();
-        }
-    }
-
-    private void login() {
-        List<AuthUI.IdpConfig> providers = Arrays.asList(
-                new AuthUI.IdpConfig.EmailBuilder().build());
-        Intent signInIntent = AuthUI.getInstance()
-                .createSignInIntentBuilder()
-                .setAvailableProviders(providers)
-                .build();
-        signInLauncher.launch(signInIntent);
     }
 
     private void openApp() {
