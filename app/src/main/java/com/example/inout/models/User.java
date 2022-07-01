@@ -40,6 +40,10 @@ public class User {
     }
 
     public YearDataHelper.MonthDataHelper getMonthData(int year, int month) {
-        return timeClockData.get(String.valueOf(year)).getMonthsData().get(month);
+        try {
+            return timeClockData.get(String.valueOf(year)).getMonthsData().get(month);
+        }catch (NullPointerException e){
+            return new YearDataHelper.MonthDataHelper();
+        }
     }
 }

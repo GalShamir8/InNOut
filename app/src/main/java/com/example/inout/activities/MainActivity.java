@@ -24,7 +24,6 @@ import com.google.android.material.appbar.MaterialToolbar;
 public class MainActivity extends AppCompatActivity {
     private final String IMG_URL = "https://cdn.wallpapersafari.com/99/30/LrD3p9.jpg";
     private String chosenDate;
-    private Bundle data;
     private ImageView  main_IMG_background;
     private enum eViewState {background, center, bottom};
     private TextView main_TXT_appTitle;
@@ -37,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
         setBackground();
         setAppTitle();
         setUserView();
-        data = new Bundle();
     }
 
     private void setAppTitle() {
@@ -52,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setUserView() {
         setViewVisibility(eViewState.background, View.VISIBLE);
-        setViewVisibility(eViewState.center, View.INVISIBLE);
+        setViewVisibility(eViewState.center, View.VISIBLE);
         setViewVisibility(eViewState.bottom, View.INVISIBLE);
         TableFragment fragment = new TableFragment();
         loadFragment(R.id.main_center_frame, fragment);
@@ -63,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
             case background:
                 main_IMG_background.setVisibility(visibility);
                 main_TXT_appTitle.setVisibility(visibility);
-                findViewById(R.id.main_center_frame).setVisibility(visibility);
                 break;
             case bottom:
                 findViewById(R.id.main_bottom_frame).setVisibility(visibility);
@@ -97,8 +94,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String getCurrentTitle() {
-//        return MyFirebase.getInstance().getUser().getEmail();
-        return "MyFirebase.getInstance().getUser().getEmail()";
+        return MyFirebase.getInstance().getUser().getEmail();
     }
 
     @Override
