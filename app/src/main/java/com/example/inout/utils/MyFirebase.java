@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import com.example.inout.common.TimeClock;
 import com.example.inout.models.User;
 
+import com.example.inout.models.YearDataHelper;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -12,6 +13,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Calendar;
+
 
 public class MyFirebase {
     private static final String DATABASE_URL = "https://innout-acc3b-default-rtdb.firebaseio.com";
@@ -35,6 +39,7 @@ public class MyFirebase {
         db = FirebaseDatabase.getInstance(DATABASE_URL);
         root = db.getReference();
         auth = FirebaseAuth.getInstance();
+        userData = new User();
     }
 
     public static MyFirebase getInstance(){
@@ -42,6 +47,17 @@ public class MyFirebase {
             firebaseInstance = new MyFirebase();
         }
         return firebaseInstance;
+    }
+
+    public void setUserData(){
+        if (getUser() != null){
+            readUserData();
+        }
+    }
+
+    public YearDataHelper.MonthDataHelper getUserMonthData(int month) {
+        readUserData();
+        return userData.getMonthData(Calendar.getInstance().get(Calendar.YEAR), month);
     }
 
     public boolean saveUserTimeClock(TimeClock start, TimeClock end, String date) {
@@ -58,8 +74,6 @@ public class MyFirebase {
         }catch(IndexOutOfBoundsException e){
             return false;
         }
-        userData = new User();
-        userData.setUuid(userUid);
         userData.buildUserTimeClockData(year, month, day, start, end);
 
         root.child(USERS_PATH).child(userData.getUuid()).setValue(userData);
@@ -88,6 +102,7 @@ public class MyFirebase {
     }
 
     public void readUserData() {
+
         root.child(USERS_PATH).child(getUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
