@@ -17,6 +17,7 @@ import com.example.inout.utils.MyFirebase;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.Map;
 
 public class TableFragment extends Fragment {
@@ -64,7 +65,7 @@ public class TableFragment extends Fragment {
                 MaterialTextView startHourColData = new MaterialTextView(view.getContext());
                 MaterialTextView endHourColData = new MaterialTextView(view.getContext());
 
-                dayColData.setText(e.getKey().split(MyFirebase.KEY_PREFIX)[1]);
+                dayColData.setText(getDayColData(e.getKey()));
                 startHourColData.setText(e.getValue().getStart().toString());
                 endHourColData.setText(e.getValue().getEnd().toString());
 
@@ -79,6 +80,29 @@ public class TableFragment extends Fragment {
                 table_TBL_monthTable.addView(tableRow);
             }
         }
+    }
+
+    private String getDayColData(String dayKey) {
+        int day = Integer.parseInt(dayKey.split(MyFirebase.KEY_PREFIX)[1]);
+        Calendar c = Calendar.getInstance();
+        c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), day);
+        switch (c.get(Calendar.DAY_OF_WEEK)){
+            case Calendar.SUNDAY:
+                return String.format(Locale.US, "SUN-%d", day);
+            case Calendar.MONDAY:
+                return String.format(Locale.US, "MON-%d", day);
+            case Calendar.TUESDAY:
+                return String.format(Locale.US, "TUE-%d", day);
+            case Calendar.WEDNESDAY:
+                return String.format(Locale.US, "WED-%d", day);
+            case Calendar.THURSDAY:
+                return String.format(Locale.US, "THU-%d", day);
+            case Calendar.FRIDAY:
+                return String.format(Locale.US, "FRI-%d", day);
+            case Calendar.SATURDAY:
+                return String.format(Locale.US, "SAT-%d", day);
+        }
+        return "" + day;
     }
 
     private void setHeaders() {

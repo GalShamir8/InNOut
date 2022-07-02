@@ -26,7 +26,7 @@ import com.example.inout.utils.MyFirebase;
 import com.google.android.material.appbar.MaterialToolbar;
 
 public class MainActivity extends AppCompatActivity {
-    private final String IMG_URL = "https://cdn.wallpapersafari.com/99/30/LrD3p9.jpg";
+    private final String IMG_URL = "https://images.unsplash.com/photo-1609114214822-d7c54701055c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE4fHx8ZW58MHx8fHw%3D&w=1000&q=80";
     private String chosenDate;
     private ImageView  main_IMG_background;
     private enum eViewState {background, center, bottom};
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUserView() {
-        setViewVisibility(eViewState.background, View.INVISIBLE);
+        setViewVisibility(eViewState.background, View.VISIBLE);
         setViewVisibility(eViewState.center, View.VISIBLE);
         setViewVisibility(eViewState.bottom, View.VISIBLE);
         TableFragment tableFragment = new TableFragment();
@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateHours() {
         setViewVisibility(eViewState.center, View.VISIBLE);
-        setViewVisibility(eViewState.bottom, View.VISIBLE);
+        setViewVisibility(eViewState.bottom, View.INVISIBLE);
         setViewVisibility(eViewState.background, View.INVISIBLE);
         CalendarFragment calendarFragment = new CalendarFragment();
         calendarFragment.setOnDatePickCallback((params) -> openUpdateHoursForm(
@@ -170,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
                 )
         );
         loadFragment(R.id.main_bottom_frame, updateHoursFragment);
+        setViewVisibility(eViewState.bottom, View.VISIBLE);
         return true;
     }
 
@@ -186,7 +187,6 @@ public class MainActivity extends AppCompatActivity {
     private void updateProfile() {
         setViewVisibility(eViewState.center, View.VISIBLE);
         setViewVisibility(eViewState.bottom, View.INVISIBLE);
-        setViewVisibility(eViewState.background, View.INVISIBLE);
         UpdateProfileFragment updateProfileFragment = new UpdateProfileFragment();
         updateProfileFragment.setOnUpdateCompleteCallback(params -> renderUI());
         loadFragment(R.id.main_center_frame, updateProfileFragment);
