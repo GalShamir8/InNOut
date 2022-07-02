@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.inout.R;
-import com.example.inout.common.Callable;
 import com.example.inout.common.TimeClock;
 import com.example.inout.fragments.CalendarFragment;
 import com.example.inout.fragments.ReportFragment;
