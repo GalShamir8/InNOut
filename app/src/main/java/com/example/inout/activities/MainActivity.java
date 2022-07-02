@@ -18,6 +18,7 @@ import com.example.inout.R;
 import com.example.inout.common.Callable;
 import com.example.inout.common.TimeClock;
 import com.example.inout.fragments.CalendarFragment;
+import com.example.inout.fragments.ReportFragment;
 import com.example.inout.fragments.TableFragment;
 import com.example.inout.fragments.UpdateHoursFragment;
 import com.example.inout.fragments.UpdateProfileFragment;
@@ -38,8 +39,16 @@ public class MainActivity extends AppCompatActivity {
         setActionBar();
         setBackground();
         setAppTitle();
-        setUserView();
+        openReportView();
+//        setUserView();
+    }
 
+    private void openReportView() {
+        setViewVisibility(eViewState.background, View.INVISIBLE);
+        setViewVisibility(eViewState.center, View.VISIBLE);
+        setViewVisibility(eViewState.bottom, View.INVISIBLE);
+        ReportFragment fragment = new ReportFragment();
+        loadFragment(R.id.main_center_frame, fragment);
     }
 
     private void setAppTitle() {
