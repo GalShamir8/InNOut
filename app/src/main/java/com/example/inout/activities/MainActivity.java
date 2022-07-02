@@ -39,16 +39,7 @@ public class MainActivity extends AppCompatActivity {
         setActionBar();
         setBackground();
         setAppTitle();
-        openReportView();
-//        setUserView();
-    }
-
-    private void openReportView() {
-        setViewVisibility(eViewState.background, View.INVISIBLE);
-        setViewVisibility(eViewState.center, View.VISIBLE);
-        setViewVisibility(eViewState.bottom, View.INVISIBLE);
-        ReportFragment fragment = new ReportFragment();
-        loadFragment(R.id.main_center_frame, fragment);
+        setUserView();
     }
 
     private void setAppTitle() {
@@ -62,11 +53,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUserView() {
-        setViewVisibility(eViewState.background, View.VISIBLE);
+        setViewVisibility(eViewState.background, View.INVISIBLE);
         setViewVisibility(eViewState.center, View.VISIBLE);
-        setViewVisibility(eViewState.bottom, View.INVISIBLE);
-        TableFragment fragment = new TableFragment();
-        loadFragment(R.id.main_center_frame, fragment);
+        setViewVisibility(eViewState.bottom, View.VISIBLE);
+        TableFragment tableFragment = new TableFragment();
+        loadFragment(R.id.main_center_frame, tableFragment);
+        ReportFragment reportFragment = new ReportFragment();
+        loadFragment(R.id.main_bottom_frame, reportFragment);
     }
 
     private void setViewVisibility(eViewState viewStatus, int visibility) {
