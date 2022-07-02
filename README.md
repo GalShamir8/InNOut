@@ -4,10 +4,10 @@ Time clock app
 Manage your work time clock report.
 * User authentication using firebase library.
 * Update Hour via Calendar interface.
-  ![img.png](img.png)
+  ![img_6.png](app/img_6.png)
 * Be always update on tour monthly report!
 * Desire view for monthly data.
-![img_2.png](img_2.png)
+![img_2.png](app/img_2.png)
 * Can be access from any device in any time - all you need to remember is email and password
 
 ### Limitations
@@ -16,11 +16,11 @@ Manage your work time clock report.
  - Android OS only
 
 #### Login page:
-![img_3.png](img_3.png)
+![img_3.png](app/img_3.png)
 
 #### report
-![img_1.png](img_1.png)
+![img_1.png](app/img_1.png)
 
 #### Update Profile
 
-![img_4.png](img_4.png)
+![img_4.png](app/img_4.png)
