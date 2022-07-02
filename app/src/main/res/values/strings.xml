@@ -23,4 +23,6 @@
     <string name="left">Left</string>
     <string name="reported">Reported</string>
     <string name="missing_report">Missing Report</string>
+    <string name="days_in_month">Days In Month</string>
+    <string name="month_report">Month Report</string>
 </resources>

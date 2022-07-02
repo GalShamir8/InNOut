@@ -16,6 +16,15 @@
         android:elevation="10dp"
         app:cardCornerRadius="10dp"
         >
+        <TextView
+            android:id="@+id/report_TXT_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/month_report"
+            android:textStyle="bold|italic"
+            android:textColor="@color/black"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -43,13 +52,7 @@
             >
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/left"
-            android:textStyle="bold"
-            android:textColor="#434547"
-            android:paddingLeft="10dp"/>
-        <TextView
+            android:id="@+id/report_TXT_reported"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/reported"
@@ -57,12 +60,30 @@
             android:textColor="#42B146"
             android:paddingLeft="10dp"/>
         <TextView
+            android:id="@+id/report_TXT_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/left"
+            android:textStyle="bold"
+            android:textColor="#585A5C"
+            android:paddingLeft="10dp"/>
+        <TextView
+            android:id="@+id/report_TXT_missing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/missing_report"
             android:textStyle="bold"
             android:textColor="#D30C0C"
             android:paddingLeft="10dp"/>
+        <TextView
+            android:id="@+id/report_TXT_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/days_in_month"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_margin="20dp"
+            />
         </LinearLayout>
 
     </LinearLayout>
